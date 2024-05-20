@@ -1,4 +1,5 @@
 var productService =  require('./../services/ProductService')
+const {validateProduct} = require("../services/ProductService");
 
 const handle = function(func,httpErrorCode)
 {
@@ -65,9 +66,20 @@ const findProductByName = async function (req,res,next)
 
 const newProduct = async function(req,res,next)
 {
-    console.log("new product ",req.body);
+    console.log("new product in ProductController ",req.body);
+
+    /*****************************/
+    //Validation
+    const { error, data } = validateProduct(req.body);
+    if (error) {
+        console.log(" new product validation fail");
+        return res.status(400).json(error);
+    }
+    /********************************/
+
     try {
         const product = await productService.newProduct(req.body);
+       // const product = await productService.newProduct(req,res);
         if(!product) throw Error('Cannot save product');
         await res.status(201).json(product);
 

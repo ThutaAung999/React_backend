@@ -6,6 +6,10 @@ const ProductSchema = new Schema({
         type: String,
         required: true,
     },
+    brand:{
+            type: String,
+            required: true
+        },
     description: {
         type: String,
         required: true,
@@ -19,6 +23,20 @@ const ProductSchema = new Schema({
         required: true,
         default: 0,
     },
+    category: {
+        type: String,
+        required: true
+    },
+    imageFileName: {
+        type: String,
+        required: true
+    },
+    createdAt: {
+        type: Date,
+        required: true,
+        default: Date.now
+    }
+
 });
 
 module.exports = mongoose.model('Products', ProductSchema);
